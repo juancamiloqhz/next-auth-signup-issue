@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  my-app-db:
+    image: mysql
+    restart: always
+    container_name: my-app-db
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: my-app
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mysql:
